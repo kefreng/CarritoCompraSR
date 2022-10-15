@@ -6,10 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "test:lint": "next lint",
     "prepare": "husky install",
     "test:linter": "lint-staged",
-    "test:format:write": "prettier --writer --ignore-unknown"
+    "test:format:write": "prettier --writer --ignore-unknown",
+    "test:format": "prettier -c \"*/.{js,ts,tsx,css,scss}\""
   },
   "dependencies": {
     "next": "12.3.1",
