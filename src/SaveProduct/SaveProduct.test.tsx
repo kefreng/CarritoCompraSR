@@ -42,4 +42,40 @@ describe("Home", () => {
       method: "POST",
     });
   });
+
+  test("Should not allow product's name bigger than 50 chr", async () => {
+    const user = userEvent.setup();
+
+    render(<SaveProduct />);
+
+    const nameInput = screen.getByLabelText(/nombre:/i);
+    await user.type(nameInput, "a".repeat(50));
+    await user.type(nameInput, "b");
+
+    expect(nameInput).toHaveValue("a".repeat(50));
+  });
+
+  test("Should not allow product's description bigger than 200 chr", async () => {
+    const user = userEvent.setup();
+
+    render(<SaveProduct />);
+
+    const descInput = screen.getByLabelText(/descripcion:/i);
+    await user.type(descInput, "a".repeat(200));
+    await user.type(descInput, "b");
+
+    expect(descInput).toHaveValue("a".repeat(200));
+  });
+
+  test("Should not allow product's url different to url", async () => {
+    const user = userEvent.setup();
+
+    render(<SaveProduct />);
+
+    const imageInput = screen.getByLabelText(/imagen:/i);
+    await user.type(imageInput, "lider.cl/catalogo/images/whiteLineIcon.svg");
+    await user.tab();
+
+    expect(screen.getByText(/^url invalida$/i)).toBeVisible();
+  });
 });

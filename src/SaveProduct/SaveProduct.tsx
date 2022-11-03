@@ -5,58 +5,50 @@ import {
   useState,
 } from "react";
 import { saveProduct } from "./client/product-client";
+import { Product } from "./model/Product";
+import { SubmitHandler, useForm, useFormState } from "react-hook-form";
 
 export const SaveProduct: FunctionComponent = () => {
-  const [saveProductFlag, setSaveProductFlag] = useState(false);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
-  const [price, setPrice] = useState(0);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+    control,
+  } = useForm<Product>({ mode: "onChange" });
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
-    event.preventDefault();
+  const { touchedFields, isSubmitSuccessful } = useFormState({ control });
 
-    saveProduct({ name, description, image, price });
-
-    setSaveProductFlag(true);
-  };
-
-  const handleNameChange: ChangeEventHandler<HTMLInputElement> = ({
-    currentTarget: { value },
-  }) => setName(value);
-
-  const handleDescriptionChange: ChangeEventHandler<HTMLInputElement> = ({
-    currentTarget: { value },
-  }) => setDescription(value);
-
-  const handleImageChange: ChangeEventHandler<HTMLInputElement> = ({
-    currentTarget: { value },
-  }) => setImage(value);
-
-  const handlePriceChange: ChangeEventHandler<HTMLInputElement> = ({
-    currentTarget: { value },
-  }) => setPrice(Number(value));
+  const onSubmit = (data: Product) => saveProduct(data);
 
   return (
     <main>
       <h1>Formulario para guardar producto</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="name">Nombre:</label>
-        <input id="name" value={name} onChange={handleNameChange} />
+        <input id="name" maxLength={50} {...register("name")} />
         <label htmlFor="description">Descripcion:</label>
-        <input
-          id="description"
-          value={description}
-          onChange={handleDescriptionChange}
-        />
+        <input id="description" maxLength={200} {...register("description")} />
         <label htmlFor="image">Imagen:</label>
-        <input id="image" value={image} onChange={handleImageChange} />
+        <input
+          id="image"
+          {...register("image", {
+            pattern:
+              /^(www\.)[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/gi,
+          })}
+        />
+        {errors.image && touchedFields.image && <span>url invalida</span>}
         <label htmlFor="price">Precio:</label>
-        <input id="price" value={price} onChange={handlePriceChange} />
+        <input
+          id="price"
+          {...register("price", {
+            valueAsNumber: true,
+          })}
+        />
 
         <button type="submit">Guardar</button>
       </form>
-      {saveProductFlag && <p>Felicitaciones!. Producto guardado</p>}
+      {isSubmitSuccessful && <p>Felicitaciones!. Producto guardado</p>}
     </main>
   );
 };
