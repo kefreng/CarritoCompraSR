@@ -41,10 +41,15 @@ export const SaveProduct: FunctionComponent = () => {
         <label htmlFor="price">Precio:</label>
         <input
           id="price"
+          type={"number"}
           {...register("price", {
             valueAsNumber: true,
+            min: 1,
           })}
         />
+        {errors.price && touchedFields.price && (
+          <span>oye ql, ingresa numeros positivos</span>
+        )}
 
         <button type="submit">Guardar</button>
       </form>

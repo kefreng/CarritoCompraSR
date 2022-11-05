@@ -78,4 +78,30 @@ describe("Home", () => {
 
     expect(screen.getByText(/^url invalida$/i)).toBeVisible();
   });
+
+  test("Should not allow type characters different to numbers in product's price", async () => {
+    const user = userEvent.setup();
+
+    render(<SaveProduct />);
+
+    const priceInput = screen.getByLabelText(/precio:/i);
+    await user.type(priceInput, "123456");
+    await user.type(priceInput, "abc");
+
+    expect(priceInput).toHaveValue(123456);
+  });
+
+  test("Should not allow type negatives numbers in product's price", async () => {
+    const user = userEvent.setup();
+
+    render(<SaveProduct />);
+
+    const priceInput = screen.getByLabelText(/precio:/i);
+    await user.type(priceInput, "-1");
+    await user.tab();
+
+    expect(
+      screen.getByText(/^oye ql, ingresa numeros positivos$/i)
+    ).toBeVisible();
+  });
 });
