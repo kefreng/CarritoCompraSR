@@ -1,8 +1,14 @@
 import { render, screen } from "@testing-library/react";
 import { SaveProduct } from "./SaveProduct";
 import userEvent from "@testing-library/user-event";
+import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
 
 describe("Home", () => {
+  let user: UserEvent;
+  beforeEach(() => {
+    user = userEvent.setup();
+  });
+
   test("should exists", () => {
     render(<SaveProduct />);
     expect(screen.getByText(/formulario para guardar producto/i)).toBeVisible();
@@ -11,7 +17,6 @@ describe("Home", () => {
   test("should save product information", async () => {
     const fetchSpy = jest.fn();
     global.fetch = fetchSpy;
-    const user = userEvent.setup();
 
     render(<SaveProduct />);
 
@@ -44,8 +49,6 @@ describe("Home", () => {
   });
 
   test("Should not allow product's name bigger than 50 chr", async () => {
-    const user = userEvent.setup();
-
     render(<SaveProduct />);
 
     const nameInput = screen.getByLabelText(/nombre:/i);
@@ -56,8 +59,6 @@ describe("Home", () => {
   });
 
   test("Should not allow product's description bigger than 200 chr", async () => {
-    const user = userEvent.setup();
-
     render(<SaveProduct />);
 
     const descInput = screen.getByLabelText(/descripcion:/i);
@@ -68,8 +69,6 @@ describe("Home", () => {
   });
 
   test("Should not allow product's url different to url", async () => {
-    const user = userEvent.setup();
-
     render(<SaveProduct />);
 
     const imageInput = screen.getByLabelText(/imagen:/i);
@@ -80,8 +79,6 @@ describe("Home", () => {
   });
 
   test("Should not allow type characters different to numbers in product's price", async () => {
-    const user = userEvent.setup();
-
     render(<SaveProduct />);
 
     const priceInput = screen.getByLabelText(/precio:/i);
@@ -92,8 +89,6 @@ describe("Home", () => {
   });
 
   test("Should not allow type negatives numbers in product's price", async () => {
-    const user = userEvent.setup();
-
     render(<SaveProduct />);
 
     const priceInput = screen.getByLabelText(/precio:/i);
