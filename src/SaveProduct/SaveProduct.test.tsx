@@ -15,7 +15,9 @@ describe("Home", () => {
   });
 
   test("should save product information", async () => {
-    const fetchSpy = jest.fn();
+    const fetchSpy = jest.fn().mockResolvedValue({
+      ok: true,
+    });
     global.fetch = fetchSpy;
 
     render(<SaveProduct />);
@@ -122,5 +124,34 @@ describe("Home", () => {
     await user.type(priceInput, "-1111");
 
     expect(screen.getByText(/^guardar$/i)).toBeDisabled();
+  });
+
+  test("should show error when occurs error on saving data product", async () => {
+    const fetchSpy = jest.fn().mockResolvedValue({
+      ok: false,
+    });
+    global.fetch = fetchSpy;
+
+    render(<SaveProduct />);
+
+    const nameInput = screen.getByLabelText(/nombre:/i);
+    await user.type(nameInput, "lata de merluzo");
+
+    const descInput = screen.getByLabelText(/descripcion:/i);
+    await user.type(descInput, "descripcion");
+
+    const imageInput = screen.getByLabelText(/imagen:/i);
+    await user.type(
+      imageInput,
+      "www.lider.cl/catalogo/images/whiteLineIcon.svg"
+    );
+
+    const priceInput = screen.getByLabelText(/precio:/i);
+    await user.type(priceInput, "1111");
+
+    const saveButton = screen.getByText(/^guardar$/i);
+    await user.click(saveButton);
+
+    expect(await screen.findByText(/Error guardando datos/i)).toBeVisible();
   });
 });

@@ -1,27 +1,31 @@
-import {
-  ChangeEventHandler,
-  FormEventHandler,
-  FunctionComponent,
-  useState,
-} from "react";
+import { FunctionComponent, useState } from "react";
 import { saveProduct } from "./client/product-client";
 import { Product } from "./model/Product";
-import { SubmitHandler, useForm, useFormState } from "react-hook-form";
+import { useForm, useFormState } from "react-hook-form";
 
 export const SaveProduct: FunctionComponent = () => {
+  const [isSavedOk, setIsSavedOk] = useState<boolean | undefined>();
+
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
     control,
   } = useForm<Product>({ mode: "onChange" });
 
-  const { touchedFields, isSubmitSuccessful, isValid } = useFormState({
-    control,
-  });
+  const { touchedFields, isSubmitSuccessful, isValid, isSubmitted } =
+    useFormState({
+      control,
+    });
 
-  const onSubmit = (data: Product) => saveProduct(data);
+  const onSubmit = async (data: Product) => {
+    try {
+      await saveProduct(data);
+      setIsSavedOk(true);
+    } catch (err) {
+      setIsSavedOk(false);
+    }
+  };
 
   return (
     <main>
@@ -67,7 +71,8 @@ export const SaveProduct: FunctionComponent = () => {
           Guardar
         </button>
       </form>
-      {isSubmitSuccessful && <p>Felicitaciones!. Producto guardado</p>}
+      {isSavedOk && <p>Felicitaciones!. Producto guardado</p>}
+      {isSavedOk === false && <p>Error guardando datos</p>}
     </main>
   );
 };
