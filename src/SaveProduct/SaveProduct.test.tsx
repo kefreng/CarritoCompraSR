@@ -99,4 +99,28 @@ describe("Home", () => {
       screen.getByText(/^oye ql, ingresa numeros positivos$/i)
     ).toBeVisible();
   });
+
+  test("should have submit button disabled when a field is wrong", async () => {
+    const fetchSpy = jest.fn();
+    global.fetch = fetchSpy;
+
+    render(<SaveProduct />);
+
+    const nameInput = screen.getByLabelText(/nombre:/i);
+    await user.type(nameInput, "lata de merluzo");
+
+    const descInput = screen.getByLabelText(/descripcion:/i);
+    await user.type(descInput, "descripcion");
+
+    const imageInput = screen.getByLabelText(/imagen:/i);
+    await user.type(
+      imageInput,
+      "www.lider.cl/catalogo/images/whiteLineIcon.svg"
+    );
+
+    const priceInput = screen.getByLabelText(/precio:/i);
+    await user.type(priceInput, "-1111");
+
+    expect(screen.getByText(/^guardar$/i)).toBeDisabled();
+  });
 });
