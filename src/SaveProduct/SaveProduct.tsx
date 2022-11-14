@@ -13,10 +13,9 @@ export const SaveProduct: FunctionComponent = () => {
     control,
   } = useForm<Product>({ mode: "onChange" });
 
-  const { touchedFields, isSubmitSuccessful, isValid, isSubmitted } =
-    useFormState({
-      control,
-    });
+  const { touchedFields, isValid } = useFormState({
+    control,
+  });
 
   const onSubmit = async (data: Product) => {
     try {
