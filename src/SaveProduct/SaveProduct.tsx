@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from "react";
-import { saveProduct } from "./client/product-client";
+import { saveProduct } from "./service/product-service";
 import { Product } from "./model/Product";
 import { useForm, useFormState } from "react-hook-form";
 

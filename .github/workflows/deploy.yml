@@ -21,6 +21,8 @@ jobs:
         run: yarn test:lint
       - name: Test Coverage
         run: yarn test:coverage
+      - name: e2e Test
+        run: yarn test:e2e
   Deploy-Production:
     runs-on: ubuntu-latest
     needs: Testing

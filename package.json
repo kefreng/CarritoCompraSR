@@ -13,7 +13,10 @@
     "test:format": "prettier -c \"*/.{js,ts,tsx,css,scss}\"",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "test:e2e": "concurrently --kill-others --success \"first\" \"yarn cypress:run\" \"yarn dev\""
   },
   "dependencies": {
     "next": "12.3.1",
@@ -32,6 +35,9 @@
     "@types/react-dom": "18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
+    "concurrently": "^7.6.0",
+    "cypress": "^11.0.1",
+    "cypress-plugin-tab": "^1.0.5",
     "eslint": "^8.27.0",
     "eslint-config-next": "12.3.1",
     "eslint-config-prettier": "^8.5.0",

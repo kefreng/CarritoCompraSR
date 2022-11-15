@@ -3,3 +3,5 @@
 yarn test:linter
 
 yarn test:coverage
+
+yarn test:e2e

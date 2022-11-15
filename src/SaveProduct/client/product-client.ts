@@ -1,7 +1,7 @@
 import { Product } from "@carrito-compra/SaveProduct/model/Product";
 
-export const saveProduct = async (product: Product) => {
-  const result = await fetch("/api/save-product", {
+export const post = async (url: string, product: Product) => {
+  const result = await fetch(url, {
     method: "POST",
     body: JSON.stringify(product),
   });
