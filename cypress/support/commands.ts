@@ -36,3 +36,4 @@
 //   }
 // }
 import "cypress-plugin-tab";
+import "@frsource/cypress-plugin-visual-regression-diff";

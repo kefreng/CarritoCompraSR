@@ -1,0 +1,69 @@
+$mobile-max-break: 768px;
+
+#save-product {
+  padding: 10px;
+
+  h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+  }
+
+  form {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    @media (min-width: $mobile-max-break) {
+      display: grid;
+      grid-template-areas:
+        "name name"
+        "description description"
+        "image price"
+        ". save-button";
+    }
+
+    section {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      &.name-input {
+        grid-area: name;
+      }
+
+      &.decription-input {
+        grid-area: description;
+      }
+
+      &.image-input {
+        grid-area: image;
+      }
+
+      &.price-input {
+        grid-area: price;
+      }
+
+      input {
+        height: 2rem;
+        min-height: 32px;
+        border-radius: 10px;
+        border-color: hsl(0deg 2% 59%);
+        border-style: solid;
+      }
+    }
+
+    button {
+      height: 3rem;
+      background-color: hsl(210, 79%, 46%);
+      color: white;
+      font-weight: bold;
+      font-size: 1.5rem;
+      border-radius: 10px;
+      grid-area: save-button;
+      @media (min-width: $mobile-max-break) {
+        width: 50%;
+        justify-self: end;
+      }
+    }
+  }
+}

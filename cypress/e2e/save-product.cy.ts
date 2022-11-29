@@ -35,4 +35,20 @@ describe("Save Product", () => {
 
     cy.contains("Felicitaciones!. Producto guardado").should("be.visible");
   });
+
+  it("visual testing", () => {
+    cy.visit("http://localhost:3000");
+    cy.contains("Guardar producto").click();
+    cy.contains("Formulario para guardar producto");
+
+    cy.viewport("iphone-6+");
+    cy.matchImage({
+      maxDiffThreshold: 0.1,
+    });
+
+    cy.viewport("ipad-mini");
+    cy.matchImage({
+      maxDiffThreshold: 0.1,
+    });
+  });
 });

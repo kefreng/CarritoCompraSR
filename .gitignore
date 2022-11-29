@@ -37,3 +37,8 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+#cypress
+cypress/**/*.actual.png
+cypress/**/*.diff.png
+cypress/screenshots

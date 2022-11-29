@@ -15,7 +15,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
+    "cypress:run": "cypress run --config defaultCommandTimeout=10000",
     "test:e2e": "concurrently --kill-others --success \"first\" \"yarn cypress:run\" \"yarn dev\""
   },
   "dependencies": {
@@ -25,6 +25,7 @@
     "react-hook-form": "^7.39.1"
   },
   "devDependencies": {
+    "@frsource/cypress-plugin-visual-regression-diff": "^3.2.4",
     "@testing-library/dom": "^8.19.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -48,6 +49,7 @@
     "jest-environment-jsdom": "^29.2.0",
     "lint-staged": "^13.0.3",
     "prettier": "2.7.1",
+    "sass": "^1.56.1",
     "typescript": "^4.8.4"
   }
 }
