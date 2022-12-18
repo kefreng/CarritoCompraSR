@@ -1,0 +1,14 @@
+ 
+ .input {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      input {
+        height: 2rem;
+        min-height: 32px;
+        border-radius: 10px;
+        border-color: hsl(0deg 2% 59%);
+        border-style: solid;
+      }
+    }

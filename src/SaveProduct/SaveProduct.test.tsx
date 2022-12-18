@@ -86,8 +86,11 @@ describe("Home", () => {
     const priceInput = screen.getByLabelText(/precio:/i);
     await user.type(priceInput, "123456");
     await user.type(priceInput, "abc");
+    await user.tab();
 
-    expect(priceInput).toHaveValue(123456);
+    expect(
+      await screen.findByText(/oye ql, ingresa numeros positivos/i)
+    ).toBeVisible();
   });
 
   test("Should not allow type negatives numbers in product's price", async () => {
