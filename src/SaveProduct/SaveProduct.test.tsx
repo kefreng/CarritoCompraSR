@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { SaveProduct } from "./SaveProduct";
 import userEvent from "@testing-library/user-event";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
@@ -38,15 +38,19 @@ describe("Home", () => {
     await user.type(priceInput, "1111");
 
     const saveButton = screen.getByText(/^guardar$/i);
-    await user.click(saveButton);
+    user.click(saveButton);
 
-    expect(
-      await screen.findByText(/Felicitaciones!. Producto guardado/i)
-    ).toBeVisible();
+    await waitFor(() => {
+      expect(priceInput).toHaveValue("");
 
-    expect(fetchSpy).toHaveBeenCalledWith("/api/save-product", {
-      body: '{"name":"lata de merluzo","description":"descripcion","image":"www.lider.cl/catalogo/images/whiteLineIcon.svg","price":1111}',
-      method: "POST",
+      expect(fetchSpy).toHaveBeenCalledWith("/api/save-product", {
+        body: '{"name":"lata de merluzo","description":"descripcion","image":"www.lider.cl/catalogo/images/whiteLineIcon.svg","price":1111}',
+        method: "POST",
+      });
+
+      expect(
+        screen.getByText(/Felicitaciones!. Producto guardado/i)
+      ).toBeVisible();
     });
   });
 

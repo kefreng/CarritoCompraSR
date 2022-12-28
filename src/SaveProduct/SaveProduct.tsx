@@ -13,11 +13,12 @@ export const SaveProduct: FunctionComponent = () => {
   const [isSavedOk, setIsSavedOk] = useState<boolean | undefined>();
 
   const formMethods = useForm<Product>({ mode: "onChange" });
-  const { handleSubmit } = formMethods;
+  const { handleSubmit, reset } = formMethods;
 
   const onSubmit = async (data: Product) => {
     try {
       await saveProduct({ ...data, price: parseInt(data.price + "") });
+      reset();
       setIsSavedOk(true);
     } catch (err) {
       setIsSavedOk(false);
