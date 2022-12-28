@@ -2,6 +2,15 @@ $mobile-max-break: 768px;
 
 #save-product {
   padding: 10px;
+  height: 100vh;
+  background-color: hsl(0deg 0% 100%);
+  @media (min-width: $mobile-max-break) {
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    margin: 0 auto;
+    max-width: 750px;
+  }
 
   h1 {
     font-family: Arial, Helvetica, sans-serif;
