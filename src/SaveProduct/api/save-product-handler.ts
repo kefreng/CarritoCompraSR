@@ -1,5 +1,5 @@
 import type { NextApiHandler } from "next";
-import { saveData } from "@carrito-compra/SaveProduct/client/memory-client";
+import { saveData } from "@carrito-compra/share/client/memory-client";
 
 export const saveProductHandler: NextApiHandler = (req, res) => {
   if (req.method !== "POST") {
